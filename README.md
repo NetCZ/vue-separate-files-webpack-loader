@@ -1,5 +1,7 @@
 # Vue separate files Webpack loader
 
+[![npm version](https://badge.fury.io/js/vue-separate-files-webpack-loader.svg)](https://badge.fury.io/js/vue-separate-files-webpack-loader)
+
 Creates `.vue` single file components on fly, allowing you to have clean separated components files and still enjoy advantages of [vue-loader](https://github.com/vuejs/vue-loader).
 
 - Handles files by their names (instead loading of all files in folder) and creates `.vue` file on fly (instead creating physical one)

@@ -1,0 +1,15 @@
+{
+  "name": "vue-separate-files-webpack-loader",
+  "version": "0.1.0",
+  "description": "Vue separated components loader for Webpack",
+  "main": "index.js",
+  "repository": "git@github.com:NetCZ/vue-separate-files-webpack-loader.git",
+  "author": "Michal Szajter <michal@szajter.cz>",
+  "license": "MIT",
+  "dependencies": {
+    "create-html-element": "^1.0.0",
+    "loader-utils": "^1.1.0",
+    "lodash": "^4.17.5",
+    "path": "^0.12.7"
+  }
+}

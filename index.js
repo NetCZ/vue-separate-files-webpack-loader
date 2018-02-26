@@ -12,20 +12,24 @@ var defaultOptions = {
   }
 };
 
-module.exports = function () {
-  var options = helper.resolveOptions(loaderUtils.getOptions(this), _.cloneDeep(defaultOptions)),
+module.exports = function (content, map, meta) {
+  var inputFile = map.file,
+    options = helper.resolveOptions(loaderUtils.getOptions(this), _.cloneDeep(defaultOptions)),
     dirPath = this.context,
-    fileNames = this.fs.readdirSync(dirPath).filter(function(file) { return !file.match(/^\./); });
+    fileNames = this.fs.readdirSync(dirPath).filter(function (file) {
+      return !file.match(/^\./);
+    });
 
   if (fileNames.length === 0) {
     return;
   }
 
   var parts = {},
+    inputFileName = inputFile.split(options.test)[0],
     fileName = '';
 
   _.forEach(fileNames, function (file) {
-    if (!file.match(options.test)) {
+    if (!file.match(options.test) || !file.match(inputFileName)) {
       return;
     }
 
@@ -39,14 +43,15 @@ module.exports = function () {
         return file.match(regex);
       });
 
-    if (_.has(parts, tagName)) {
-      throw new TypeError('File "' + file + '" can\'t be used as "' + tagName +
-        '", because it was already defined in "' + _.get(parts, tagName + '.file', null) + '".');
+    if (_.has(parts, tagName) || _.has(parts, fileType)) {
+      throw new TypeError('File "' + file + '" can\'t be used as "' + (tagName || fileType) +
+        '", because it was already defined in "' + _.get(parts[tagName || fileType], 'file', null) + '".');
     }
 
     parts[tagName || fileType] = {
       name: tagName || fileType,
       file: file,
+      fileName: fileName,
       attributes: _.assign({}, {
         src: path.join(dirPath, file),
         scoped: tagName === 'style' && scoped,

@@ -39,7 +39,7 @@ rules: [
         options: {/* usual vue-loader options */}
       },
       {
-        loader: 'vue-webpack-separate-files-loader',
+        loader: 'vue-separate-files-webpack-loader',
         options: {
           global: {
             // all files will have these

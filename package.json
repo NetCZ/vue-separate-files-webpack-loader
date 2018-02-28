@@ -1,6 +1,6 @@
 {
   "name": "vue-separate-files-webpack-loader",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Vue separated components loader for Webpack",
   "main": "index.js",
   "author": "Michal Szajter <michal@szajter.cz>",
@@ -21,7 +21,8 @@
     "component"
   ],
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "test:cov": "nyc --reporter=text-lcov yarn test | coveralls"
   },
   "dependencies": {
     "create-html-element": "^1.0.0",
@@ -30,7 +31,9 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "coveralls": "^3.0.0",
     "fs": "^0.0.1-security",
-    "mocha": "^5.0.0"
+    "mocha": "^5.0.0",
+    "nyc": "^11.4.1"
   }
 }

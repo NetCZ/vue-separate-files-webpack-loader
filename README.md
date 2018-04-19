@@ -16,6 +16,10 @@ Creates `.vue` single file components on fly, allowing you to have clean separat
 
 > Based on these ideas [vue-builder-webpack-plugin](https://github.com/pksunkara/vue-builder-webpack-plugin) and [vue-separate-files-loader](https://github.com/iFwu/vue-separate-files-loader).
 
+## Example application
+
+See [this](https://github.com/NetCZ/vue-separate-files-webpack-loader-example) repository.
+
 ## Install
 ```bash
 npm i -D vue-separate-files-webpack-loader

@@ -1,6 +1,6 @@
 {
   "name": "vue-separate-files-webpack-loader",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Vue separated components loader for Webpack",
   "main": "index.js",
   "author": "Michal Szajter <michal@szajter.cz>",

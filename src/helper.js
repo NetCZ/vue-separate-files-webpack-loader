@@ -82,7 +82,8 @@ exports.createParts = function createParts(options, dirPath, inputFile, fileName
   inputFileName = path.basename(inputFileName);
 
   _.forEach(fileNames, function (file) {
-    if (!file.match(options.test) || !file.match(inputFileName)) {
+    //match only files suffixed with .vue.*
+    if (!file.match(options.test) || !file.match(inputFileName+ '\.vue\..*$'))) {
       return;
     }
 

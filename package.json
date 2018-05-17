@@ -25,14 +25,14 @@
     "test:cov": "nyc --reporter=text-lcov yarn test | coveralls"
   },
   "dependencies": {
-    "create-html-element": "^1.0.0",
+    "create-html-element": "^2.0.0",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.5",
     "path": "^0.12.7"
   },
   "devDependencies": {
     "coveralls": "^3.0.0",
-    "fs": "^0.0.1-security",
+    "fs": "^0.0.2",
     "mocha": "^5.0.0",
     "nyc": "^11.4.1"
   }

@@ -1,5 +1,7 @@
 # Vue separate files Webpack loader
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/NetCZ/vue-separate-files-webpack-loader.svg)](https://greenkeeper.io/)
+
 [![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/vue-separate-files-webpack-loader)
 [![npm](https://img.shields.io/npm/l/express.svg)](https://www.npmjs.com/package/vue-separate-files-webpack-loader)
 [![Build Status](https://travis-ci.org/NetCZ/vue-separate-files-webpack-loader.svg?branch=master)](https://travis-ci.org/NetCZ/vue-separate-files-webpack-loader)

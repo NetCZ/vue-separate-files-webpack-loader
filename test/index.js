@@ -55,12 +55,28 @@ describe('errors', function () {
   });
 
   it('should throw TypeError - missing file types definition', function () {
-    var content = require(duplicateDir + 'Component.vue');
+    var content = require(twoPartsDir + 'Component.vue');
 
     assert.throws(function () {
       loader.apply(_.assign({}, webpack, {
         context: twoComponentsDuplicateSameDir,
         query: { types: {} }
+      }), [content, { file: 'Component.vue.js' }]);
+    }, TypeError, 'Template files check option must be string');
+  });
+
+  it('should throw TypeError - missing file types definition', function () {
+    var content = require(twoPartsDir + 'Component.vue');
+
+    assert.throws(function () {
+      loader.apply(_.assign({}, webpack, {
+        context: twoComponentsDuplicateSameDir,
+        query: {
+          types: {
+            script: '\\.coffee$',
+            style: '\\.styl$'
+          }
+        }
       }), [content, { file: 'Component.vue.js' }]);
     }, TypeError, 'Template files check option must be string');
   });

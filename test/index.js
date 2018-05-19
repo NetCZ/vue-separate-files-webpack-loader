@@ -29,13 +29,13 @@ afterEach(function () {
 
 describe('errors', function () {
   it('should throw TypeError - simple loader call', function () {
-    assert.throws(loader, TypeError);
+    assert.throws(loader, TypeError, 'Cannot read property \'file\' of undefined');
   });
 
   it('should throw TypeError - loader call without context', function () {
     assert.throws(function () {
       loader.apply(webpack);
-    }, TypeError);
+    }, TypeError, 'Cannot read property \'file\' of undefined');
   });
 
   it('should throw duplication TypeError', function () {
@@ -43,7 +43,7 @@ describe('errors', function () {
 
     assert.throws(function () {
       loader.apply(_.assign({}, webpack, { context: duplicateDir }), [content, { file: 'Component.vue.js' }]);
-    }, TypeError);
+    }, TypeError, 'File "Component.vue.pug" can\'t be used as "template", because it was already defined in "Component.vue.html".');
   });
 
   it('should throw duplication TypeError - multiple components in same directory', function () {
@@ -51,7 +51,18 @@ describe('errors', function () {
 
     assert.throws(function () {
       loader.apply(_.assign({}, webpack, { context: twoComponentsDuplicateSameDir }), [content, { file: 'Component.vue.js' }]);
-    }, TypeError);
+    }, TypeError, 'File "SecondComponent.vue.html" can\'t be used as "template", because it was already defined in "FirstComponent.vue.html".');
+  });
+
+  it('should throw TypeError - missing file types definition', function () {
+    var content = require(duplicateDir + 'Component.vue');
+
+    assert.throws(function () {
+      loader.apply(_.assign({}, webpack, {
+        context: twoComponentsDuplicateSameDir,
+        query: { types: {} }
+      }), [content, { file: 'Component.vue.js' }]);
+    }, TypeError, 'Template files check option must be string');
   });
 });
 

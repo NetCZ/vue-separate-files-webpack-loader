@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/package/vue-separate-files-webpack-loader)
 [![npm](https://img.shields.io/npm/l/express.svg)](https://www.npmjs.com/package/vue-separate-files-webpack-loader)
 [![Build Status](https://travis-ci.org/NetCZ/vue-separate-files-webpack-loader.svg?branch=master)](https://travis-ci.org/NetCZ/vue-separate-files-webpack-loader)
-[![Coverage Status](https://coveralls.io/repos/github/NetCZ/vue-separate-files-webpack-loader/badge.svg?branch=master)](https://coveralls.io/github/NetCZ/vue-separate-files-webpack-loader?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/NetCZ/vue-separate-files-webpack-loader/badge.svg)](https://coveralls.io/github/NetCZ/vue-separate-files-webpack-loader)
 [![Known Vulnerabilities](https://snyk.io/test/github/netcz/vue-separate-files-webpack-loader/badge.svg?targetFile=package.json)](https://snyk.io/test/github/netcz/vue-separate-files-webpack-loader?targetFile=package.json)
 [![Maintainability](https://api.codeclimate.com/v1/badges/eeb26dd14d1b50a6ea2f/maintainability)](https://codeclimate.com/github/NetCZ/vue-separate-files-webpack-loader/maintainability)
 [![Greenkeeper badge](https://badges.greenkeeper.io/NetCZ/vue-separate-files-webpack-loader.svg)](https://greenkeeper.io/)

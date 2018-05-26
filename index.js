@@ -12,6 +12,8 @@ var defaultOptions = {
 };
 
 module.exports = function (content, map) {
+  if(!map || !map.file) return;
+  
   var inputFile = map.file,
     options = helper.resolveOptions(loaderUtils.getOptions(this), _.cloneDeep(defaultOptions)),
     dirPath = this.context,

@@ -1,6 +1,6 @@
 {
   "name": "vue-separate-files-webpack-loader",
-  "version": "1.5.0",
+  "version": "0.0.0-development",
   "description": "Vue separated components loader for Webpack",
   "main": "index.js",
   "author": "Michal Szajter <michal@szajter.cz>",
@@ -22,7 +22,15 @@
   ],
   "scripts": {
     "test": "mocha",
-    "test:cov": "nyc --reporter=text-lcov yarn test | coveralls"
+    "test:cov": "nyc --reporter=text-lcov yarn test | coveralls",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn test",
+      "commit-msg": "commitlint -e"
+    }
   },
   "dependencies": {
     "create-html-element": "^2.0.0",
@@ -31,9 +39,15 @@
     "path": "^0.12.7"
   },
   "devDependencies": {
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.1",
+    "@commitlint/travis-cli": "^7.0.0",
     "coveralls": "^3.0.0",
     "fs": "^0.0.2",
+    "husky": "^1.0.0-rc.9",
     "mocha": "^5.0.0",
-    "nyc": "^12.0.1"
+    "nyc": "^12.0.1",
+    "semantic-release": "^15.5.2",
+    "travis-deploy-once": "^5.0.0"
   }
 }

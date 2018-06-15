@@ -1,9 +1,24 @@
 language: node_js
+cache:
+  directories:
+    - ~/.npm
+notifications:
+  email: false
 node_js:
-  - "6"
+  - '9'
+  - '8'
+  - '6'
+  - '4'
 sudo: false
 before_install: yarn global add greenkeeper-lockfile@1
 before_script: greenkeeper-lockfile-update
+script:
+  - commitlint-travis
+  - yarn test
 after_script: greenkeeper-lockfile-upload
 after_success:
   - yarn test:cov
+  - npm run travis-deploy-once "npm run semantic-release"
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/

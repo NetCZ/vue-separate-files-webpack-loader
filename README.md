@@ -10,10 +10,12 @@
 
 Creates `.vue` single file components on fly, allowing you to have clean separated components files and still enjoy advantages of [vue-loader](https://github.com/vuejs/vue-loader).
 
-- Handles files by their names (instead loading of all files in folder) and creates `.vue` file on fly (instead creating physical one)
+- Handles files by their names (instead of loading all files in folder) and creates `.vue` file on fly (instead of creating physical one)
 - Allows to add custom attributes through `options.global`, `options[FILE_TYPE]` and `options[TAG_NAME]`
 - Allows to handle [vue custom blocks](https://vue-loader.vuejs.org/en/configurations/custom-blocks.html)
 - Allows to have `scoped` style by component
+- Allows to define support for other file extensions / types
+- Allows to define test condition for loader (eg. `.vue.`, etc.)
 
 > Based on these ideas [vue-builder-webpack-plugin](https://github.com/pksunkara/vue-builder-webpack-plugin) and [vue-separate-files-loader](https://github.com/iFwu/vue-separate-files-loader).
 
@@ -49,6 +51,11 @@ rules: [
       {
         loader: 'vue-separate-files-webpack-loader',
         options: {
+          // add support for other file types
+          types: {
+            script: '\\.re$',
+            template: '\\.hb$'
+          },
           global: {
             // all files will have these
             attr: 'value'
@@ -68,13 +75,22 @@ rules: [
 ]
 ```
 
-### Supported file types
+### Supported file extensions / types
 
-These file types are supported and automatically assigned to proper tag type.
+These file extensions are supported and automatically assigned to proper tag type by default.
 
 - `html`, `jade`, `pug`
 - `js`, `jsx`, `coffee`, `ts`, `tsx`
 - `css`, `sass`, `scss`, `styl`, `less`
+
+You can add support for other file extensions simply by adding following to loader configuration.
+```javascript
+types: {
+  script: '\\.re$|\\.oj$' // add support for ".re" and ".oj" extensions for "script" type 
+}
+```
+
+> IMPORTANT! configurations are MERGED together, so there is no way do remove default configuration
 
 ### How it works
 
@@ -98,10 +114,12 @@ Generated structure
 <script src="Component.vue.js"></script>
 ```
 
+This generated string is then passed to "vue-loader"
+
 ### Custom block support
 
 Loader allows to use `vue custom blocks`. 
-Simply define file with proper extension and it will be used as tag name.
+Simply define file and its extension will be used as tag name.
 
 #### Example
 

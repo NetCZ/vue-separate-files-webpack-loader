@@ -13,7 +13,8 @@ var twoPartsDir = path.resolve(dir + '/files/two-parts') + path.sep,
   duplicateDir = path.resolve(dir + '/files/duplicate') + path.sep,
   emptyDir = path.resolve(dir + '/files/empty') + path.sep,
   twoComponentsSameDir = path.resolve(dir + '/files/two-components-same-dir') + path.sep,
-  twoComponentsDuplicateSameDir = path.resolve(dir + '/files/two-components-duplicate-same-dir') + path.sep;
+  twoComponentsDuplicateSameDir = path.resolve(dir + '/files/two-components-duplicate-same-dir') + path.sep,
+  twoPartsDirCustomScript = path.resolve(dir + '/files/two-parts-custom-script') + path.sep;
 
 beforeEach(function () {
   loader = require('../index');
@@ -52,33 +53,6 @@ describe('errors', function () {
     assert.throws(function () {
       loader.apply(_.assign({}, webpack, { context: twoComponentsDuplicateSameDir }), [content, { file: 'Component.vue.js' }]);
     }, TypeError, 'File "SecondComponent.vue.html" can\'t be used as "template", because it was already defined in "FirstComponent.vue.html".');
-  });
-
-  it('should throw TypeError - missing file types definition', function () {
-    var content = require(twoPartsDir + 'Component.vue');
-
-    assert.throws(function () {
-      loader.apply(_.assign({}, webpack, {
-        context: twoComponentsDuplicateSameDir,
-        query: { types: {} }
-      }), [content, { file: 'Component.vue.js' }]);
-    }, TypeError, 'Template files check option must be string');
-  });
-
-  it('should throw TypeError - missing file types definition', function () {
-    var content = require(twoPartsDir + 'Component.vue');
-
-    assert.throws(function () {
-      loader.apply(_.assign({}, webpack, {
-        context: twoComponentsDuplicateSameDir,
-        query: {
-          types: {
-            script: '\\.coffee$',
-            style: '\\.styl$'
-          }
-        }
-      }), [content, { file: 'Component.vue.js' }]);
-    }, TypeError, 'Template files check option must be string');
   });
 });
 
@@ -265,5 +239,22 @@ describe('success', function () {
 
     assert.strictEqual(firstComponentResult, firstComponentExpected);
     assert.strictEqual(secondComponentResult, secondComponentExpected);
+  });
+
+  it('should has two parts with custom defined script file', function () {
+    var content = require(twoPartsDirCustomScript + 'Component.vue.re');
+
+    var expected = '<template src="' + twoPartsDirCustomScript + 'Component.vue.html" lang="html"></template>' +
+      '<script src="' + twoPartsDirCustomScript + 'Component.vue.re" lang="re"></script>';
+
+    var result = loader.apply(_.assign({}, webpack, {
+      context: twoPartsDirCustomScript, query: {
+        types: {
+          script: '\\.re$'
+        }
+      }
+    }), [content, { file: 'Component.vue.re' }]);
+
+    assert.strictEqual(result, expected);
   });
 });

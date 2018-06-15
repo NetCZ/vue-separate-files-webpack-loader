@@ -12,12 +12,19 @@ var defaultOptions = {
 };
 
 module.exports = function (content, map) {
+  var loaderOptions = loaderUtils.getOptions(this);
   var inputFile = map.file,
-    options = helper.resolveOptions(loaderUtils.getOptions(this), _.cloneDeep(defaultOptions)),
+    options = _.assign({}, _.cloneDeep(defaultOptions), loaderOptions),
     dirPath = this.context,
     fileNames = this.fs.readdirSync(dirPath).filter(function (file) {
       return !file.match(/^\./);
     });
+
+  _.forEach(defaultOptions.types, function (definition, type) {
+    var defaultDefinition = definition.split(/\|(?=\\)/g);
+    var loaderDefinition = _.get(loaderOptions, 'types[' + type + ']', '').split(/\|(?=\\)/g);
+    options.types[type] = _.compact(defaultDefinition.concat(loaderDefinition)).join('|');
+  });
 
   if (fileNames.length === 0) {
     return;

@@ -8,6 +8,10 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/eeb26dd14d1b50a6ea2f/maintainability)](https://codeclimate.com/github/NetCZ/vue-separate-files-webpack-loader/maintainability)
 [![Greenkeeper badge](https://badges.greenkeeper.io/NetCZ/vue-separate-files-webpack-loader.svg)](https://greenkeeper.io/)
 
+> ## CAUTION!
+> Loader works with [vue-loader](https://github.com/vuejs/vue-loader) up to version 14. It **DO NOT WORK** with version 15.
+> Compatibility issues has been identified and solving is in progress.
+
 Creates `.vue` single file components on fly, allowing you to have clean separated components files and still enjoy advantages of [vue-loader](https://github.com/vuejs/vue-loader).
 
 - Handles files by their names (instead of loading all files in folder) and creates `.vue` file on fly (instead of creating physical one)

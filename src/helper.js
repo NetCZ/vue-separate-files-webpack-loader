@@ -67,6 +67,7 @@ exports.createPart = function createPart(settings, options) {
     file: settings.file,
     fileName: settings.fileName,
     attributes: _.assign({}, {
+      separated: true,
       src: path.join(settings.dirPath, settings.file),
       scoped: settings.tagName === 'style' && settings.scoped,
       lang: settings.tagName ? settings.fileType : false

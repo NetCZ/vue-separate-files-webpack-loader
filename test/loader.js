@@ -1,4 +1,4 @@
-var assert = require('assert'),
+var assert = require('chai').assert,
   path = require('path'),
   fs = require('fs'),
   _ = require('lodash');
@@ -28,15 +28,15 @@ afterEach(function () {
   webpack = undefined;
 });
 
-describe('errors', function () {
+describe('loader: errors', function () {
   it('should throw TypeError - simple loader call', function () {
-    assert.throws(loader, TypeError, 'Cannot read property \'file\' of undefined');
+    assert.throws(loader, TypeError, 'The "path" argument must be of type string. Received type undefined');
   });
 
   it('should throw TypeError - loader call without context', function () {
     assert.throws(function () {
       loader.apply(webpack);
-    }, TypeError, 'Cannot read property \'file\' of undefined');
+    }, TypeError, 'The "path" argument must be of type string. Received type undefined');
   });
 
   it('should throw duplication TypeError', function () {
@@ -56,7 +56,7 @@ describe('errors', function () {
   });
 });
 
-describe('config', function () {
+describe('loader: config', function () {
   it('should return empty response', function () {
     var content = require(twoPartsDir + 'Component.vue');
 
@@ -84,12 +84,12 @@ describe('config', function () {
   });
 });
 
-describe('success', function () {
+describe('loader: success', function () {
   it('should has two parts', function () {
     var content = require(twoPartsDir + 'Component.vue');
 
-    var expected = '<template src="' + twoPartsDir + 'Component.vue.html" lang="html"></template>' +
-      '<script src="' + twoPartsDir + 'Component.vue.js" lang="js"></script>';
+    var expected = '<template separated src="' + twoPartsDir + 'Component.vue.html" lang="html"></template>' +
+      '<script separated src="' + twoPartsDir + 'Component.vue.js" lang="js"></script>';
 
     var result = loader.apply(_.assign({}, webpack, { context: twoPartsDir }), [content, { file: 'Component.vue.js' }]);
 
@@ -99,9 +99,9 @@ describe('success', function () {
   it('should has three parts', function () {
     var content = require(threePartsDir + 'Component.vue');
 
-    var expected = '<template src="' + threePartsDir + 'Component.vue.html" lang="html"></template>' +
-      '<script src="' + threePartsDir + 'Component.vue.js" lang="js"></script>' +
-      '<style src="' + threePartsDir + 'Component.vue.css" lang="css"></style>';
+    var expected = '<template separated src="' + threePartsDir + 'Component.vue.html" lang="html"></template>' +
+      '<script separated src="' + threePartsDir + 'Component.vue.js" lang="js"></script>' +
+      '<style separated src="' + threePartsDir + 'Component.vue.css" lang="css"></style>';
 
     var result = loader.apply(_.assign({}, webpack, { context: threePartsDir }), [content, { file: 'Component.vue.js' }]);
 
@@ -111,9 +111,9 @@ describe('success', function () {
   it('should has custom block', function () {
     var content = require(customBlockDir + 'Component.vue');
 
-    var expected = '<docs src="' + customBlockDir + 'Component.vue.docs"></docs>' +
-      '<template src="' + customBlockDir + 'Component.vue.html" lang="html"></template>' +
-      '<script src="' + customBlockDir + 'Component.vue.js" lang="js"></script>';
+    var expected = '<docs separated src="' + customBlockDir + 'Component.vue.docs"></docs>' +
+      '<template separated src="' + customBlockDir + 'Component.vue.html" lang="html"></template>' +
+      '<script separated src="' + customBlockDir + 'Component.vue.js" lang="js"></script>';
 
     var result = loader.apply(_.assign({}, webpack, { context: customBlockDir }), [content, { file: 'Component.vue.js' }]);
 
@@ -123,9 +123,9 @@ describe('success', function () {
   it('should has three parts with parameters on all tags', function () {
     var content = require(threePartsDir + 'Component.vue');
 
-    var expected = '<template src="' + threePartsDir + 'Component.vue.html" lang="html" one="two"></template>' +
-      '<script src="' + threePartsDir + 'Component.vue.js" lang="js" one="two"></script>' +
-      '<style src="' + threePartsDir + 'Component.vue.css" lang="css" one="two"></style>';
+    var expected = '<template separated src="' + threePartsDir + 'Component.vue.html" lang="html" one="two"></template>' +
+      '<script separated src="' + threePartsDir + 'Component.vue.js" lang="js" one="two"></script>' +
+      '<style separated src="' + threePartsDir + 'Component.vue.css" lang="css" one="two"></style>';
 
     var result = loader.apply(_.assign({}, webpack, {
       context: threePartsDir,
@@ -138,9 +138,9 @@ describe('success', function () {
   it('should has three parts with parameters on template tag', function () {
     var content = require(threePartsDir + 'Component.vue');
 
-    var expected = '<template src="' + threePartsDir + 'Component.vue.html" lang="html" one="two"></template>' +
-      '<script src="' + threePartsDir + 'Component.vue.js" lang="js"></script>' +
-      '<style src="' + threePartsDir + 'Component.vue.css" lang="css"></style>';
+    var expected = '<template separated src="' + threePartsDir + 'Component.vue.html" lang="html" one="two"></template>' +
+      '<script separated src="' + threePartsDir + 'Component.vue.js" lang="js"></script>' +
+      '<style separated src="' + threePartsDir + 'Component.vue.css" lang="css"></style>';
 
     var result = loader.apply(_.assign({}, webpack, {
       context: threePartsDir,
@@ -153,9 +153,9 @@ describe('success', function () {
   it('should has three parts with parameters on script tag', function () {
     var content = require(threePartsDir + 'Component.vue');
 
-    var expected = '<template src="' + threePartsDir + 'Component.vue.html" lang="html"></template>' +
-      '<script src="' + threePartsDir + 'Component.vue.js" lang="js" one="two"></script>' +
-      '<style src="' + threePartsDir + 'Component.vue.css" lang="css"></style>';
+    var expected = '<template separated src="' + threePartsDir + 'Component.vue.html" lang="html"></template>' +
+      '<script separated src="' + threePartsDir + 'Component.vue.js" lang="js" one="two"></script>' +
+      '<style separated src="' + threePartsDir + 'Component.vue.css" lang="css"></style>';
 
     var result = loader.apply(_.assign({}, webpack, {
       context: threePartsDir,
@@ -168,9 +168,9 @@ describe('success', function () {
   it('should has three parts with parameters on style tag', function () {
     var content = require(threePartsDir + 'Component.vue');
 
-    var expected = '<template src="' + threePartsDir + 'Component.vue.html" lang="html"></template>' +
-      '<script src="' + threePartsDir + 'Component.vue.js" lang="js"></script>' +
-      '<style src="' + threePartsDir + 'Component.vue.css" lang="css" one="two"></style>';
+    var expected = '<template separated src="' + threePartsDir + 'Component.vue.html" lang="html"></template>' +
+      '<script separated src="' + threePartsDir + 'Component.vue.js" lang="js"></script>' +
+      '<style separated src="' + threePartsDir + 'Component.vue.css" lang="css" one="two"></style>';
 
     var result = loader.apply(_.assign({}, webpack, {
       context: threePartsDir,
@@ -183,9 +183,9 @@ describe('success', function () {
   it('should has three parts with parameters on html tag', function () {
     var content = require(threePartsDir + 'Component.vue');
 
-    var expected = '<template src="' + threePartsDir + 'Component.vue.html" lang="html" one="two"></template>' +
-      '<script src="' + threePartsDir + 'Component.vue.js" lang="js"></script>' +
-      '<style src="' + threePartsDir + 'Component.vue.css" lang="css"></style>';
+    var expected = '<template separated src="' + threePartsDir + 'Component.vue.html" lang="html" one="two"></template>' +
+      '<script separated src="' + threePartsDir + 'Component.vue.js" lang="js"></script>' +
+      '<style separated src="' + threePartsDir + 'Component.vue.css" lang="css"></style>';
 
     var result = loader.apply(_.assign({}, webpack, {
       context: threePartsDir,
@@ -198,9 +198,9 @@ describe('success', function () {
   it('should has three parts with parameters on js tag', function () {
     var content = require(threePartsDir + 'Component.vue');
 
-    var expected = '<template src="' + threePartsDir + 'Component.vue.html" lang="html"></template>' +
-      '<script src="' + threePartsDir + 'Component.vue.js" lang="js" one="two"></script>' +
-      '<style src="' + threePartsDir + 'Component.vue.css" lang="css"></style>';
+    var expected = '<template separated src="' + threePartsDir + 'Component.vue.html" lang="html"></template>' +
+      '<script separated src="' + threePartsDir + 'Component.vue.js" lang="js" one="two"></script>' +
+      '<style separated src="' + threePartsDir + 'Component.vue.css" lang="css"></style>';
 
     var result = loader.apply(_.assign({}, webpack, {
       context: threePartsDir,
@@ -213,9 +213,9 @@ describe('success', function () {
   it('should has three parts with parameters on css tag', function () {
     var content = require(threePartsDir + 'Component.vue');
 
-    var expected = '<template src="' + threePartsDir + 'Component.vue.html" lang="html"></template>' +
-      '<script src="' + threePartsDir + 'Component.vue.js" lang="js"></script>' +
-      '<style src="' + threePartsDir + 'Component.vue.css" lang="css" one="two"></style>';
+    var expected = '<template separated src="' + threePartsDir + 'Component.vue.html" lang="html"></template>' +
+      '<script separated src="' + threePartsDir + 'Component.vue.js" lang="js"></script>' +
+      '<style separated src="' + threePartsDir + 'Component.vue.css" lang="css" one="two"></style>';
 
     var result = loader.apply(_.assign({}, webpack, {
       context: threePartsDir,
@@ -229,12 +229,12 @@ describe('success', function () {
     var firstComponentContent = require(twoComponentsSameDir + 'FirstComponent.vue');
     var secondComponentContent = require(twoComponentsSameDir + 'SecondComponent.vue');
 
-    var firstComponentExpected = '<template src="' + twoComponentsSameDir + 'FirstComponent.vue.html" lang="html"></template>' +
-      '<script src="' + twoComponentsSameDir + 'FirstComponent.vue.js" lang="js"></script>';
+    var firstComponentExpected = '<template separated src="' + twoComponentsSameDir + 'FirstComponent.vue.html" lang="html"></template>' +
+      '<script separated src="' + twoComponentsSameDir + 'FirstComponent.vue.js" lang="js"></script>';
     var firstComponentResult = loader.apply(_.assign({}, webpack, { context: twoComponentsSameDir }), [firstComponentContent, { file: 'FirstComponent.vue.js' }]);
 
-    var secondComponentExpected = '<template src="' + twoComponentsSameDir + 'SecondComponent.vue.html" lang="html"></template>' +
-      '<script src="' + twoComponentsSameDir + 'SecondComponent.vue.js" lang="js"></script>';
+    var secondComponentExpected = '<template separated src="' + twoComponentsSameDir + 'SecondComponent.vue.html" lang="html"></template>' +
+      '<script separated src="' + twoComponentsSameDir + 'SecondComponent.vue.js" lang="js"></script>';
     var secondComponentResult = loader.apply(_.assign({}, webpack, { context: twoComponentsSameDir }), [secondComponentContent, { file: 'SecondComponent.vue.js' }]);
 
     assert.strictEqual(firstComponentResult, firstComponentExpected);
@@ -244,8 +244,8 @@ describe('success', function () {
   it('should has two parts with custom defined script file', function () {
     var content = require(twoPartsDirCustomScript + 'Component.vue.re');
 
-    var expected = '<template src="' + twoPartsDirCustomScript + 'Component.vue.html" lang="html"></template>' +
-      '<script src="' + twoPartsDirCustomScript + 'Component.vue.re" lang="re"></script>';
+    var expected = '<template separated src="' + twoPartsDirCustomScript + 'Component.vue.html" lang="html"></template>' +
+      '<script separated src="' + twoPartsDirCustomScript + 'Component.vue.re" lang="re"></script>';
 
     var result = loader.apply(_.assign({}, webpack, {
       context: twoPartsDirCustomScript, query: {

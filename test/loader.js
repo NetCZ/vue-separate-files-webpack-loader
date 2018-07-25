@@ -30,13 +30,13 @@ afterEach(function () {
 
 describe('loader: errors', function () {
   it('should throw TypeError - simple loader call', function () {
-    assert.throws(loader, TypeError, 'The "path" argument must be of type string. Received type undefined');
+    assert.throws(loader, TypeError);
   });
 
   it('should throw TypeError - loader call without context', function () {
     assert.throws(function () {
       loader.apply(webpack);
-    }, TypeError, 'The "path" argument must be of type string. Received type undefined');
+    }, TypeError);
   });
 
   it('should throw duplication TypeError', function () {

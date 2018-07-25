@@ -1,5 +1,6 @@
 var loaderUtils = require('loader-utils'),
   _ = require('lodash'),
+  path = require('path'),
   helper = require('./src/helper');
 
 var defaultOptions = {
@@ -12,8 +13,10 @@ var defaultOptions = {
 };
 
 module.exports = function (content, map) {
+  map = map || {};
+
   var loaderOptions = loaderUtils.getOptions(this);
-  var inputFile = map.file,
+  var inputFile = map.file || path.basename(this.resourcePath),
     options = _.assign({}, _.cloneDeep(defaultOptions), loaderOptions),
     dirPath = this.context,
     fileNames = this.fs.readdirSync(dirPath).filter(function (file) {

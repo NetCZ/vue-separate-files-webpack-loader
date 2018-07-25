@@ -8,20 +8,19 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/eeb26dd14d1b50a6ea2f/maintainability)](https://codeclimate.com/github/NetCZ/vue-separate-files-webpack-loader/maintainability)
 [![Greenkeeper badge](https://badges.greenkeeper.io/NetCZ/vue-separate-files-webpack-loader.svg)](https://greenkeeper.io/)
 
-> ## CAUTION!
-> Loader works with [vue-loader](https://github.com/vuejs/vue-loader) up to version 14. It **DO NOT WORK** with version 15.
-> Compatibility issues has been identified and solving is in progress.
+Creates `.vue` single file components on fly, allowing you to have clean separated components files and still enjoy 
+advantages of [vue-loader](https://github.com/vuejs/vue-loader).
 
-Creates `.vue` single file components on fly, allowing you to have clean separated components files and still enjoy advantages of [vue-loader](https://github.com/vuejs/vue-loader).
-
-- Handles files by their names (instead of loading all files in folder) and creates `.vue` file on fly (instead of creating physical one)
+- Handles files by their names (instead of loading all files in folder) and creates `.vue` file on fly (instead of 
+creating physical one)
 - Allows to add custom attributes through `options.global`, `options[FILE_TYPE]` and `options[TAG_NAME]`
 - Allows to handle [vue custom blocks](https://vue-loader.vuejs.org/en/configurations/custom-blocks.html)
 - Allows to have `scoped` style by component
 - Allows to define support for other file extensions / types
 - Allows to define test condition for loader (eg. `.vue.`, etc.)
 
-> Based on these ideas [vue-builder-webpack-plugin](https://github.com/pksunkara/vue-builder-webpack-plugin) and [vue-separate-files-loader](https://github.com/iFwu/vue-separate-files-loader).
+> Based on these ideas [vue-builder-webpack-plugin](https://github.com/pksunkara/vue-builder-webpack-plugin) and 
+[vue-separate-files-loader](https://github.com/iFwu/vue-separate-files-loader).
 
 ## Example application
 
@@ -38,45 +37,171 @@ yarn add -D vue-separate-files-webpack-loader
 
 ## Usage
 
+**VueLoader v15 onward**\
+As [vue-loader](https://github.com/vuejs/vue-loader) introduced mandatory plugin usage in version 15, 
+which updates webpack rules, there's need to use plugin provided by `vue-separate-files-webpack-loader/plugin` in order to work 
+with this version onward.
+
+**VueLoader v14 and below**\
+Just don't include `vue-separate-files-webpack-loader/plugin` to your webpack configuration.
+
 ### Configuration
 
-Loader must have precedence before `vue-loader`. 
-
+#### Simple
 ```javascript
-rules: [
-  {
-    // notice modified file test
-    test: /\.vue\./,
-    use: [
+// webpack.config.js
+
+const VueSeparateLoaderPlugin = require('vue-separate-files-webpack-loader/plugin')
+
+module.exports = {
+  module: {
+    rules: [
       {
-        loader: 'vue-loader',
-        options: {/* usual vue-loader options */}
-      },
-      {
-        loader: 'vue-separate-files-webpack-loader',
-        options: {
-          // add support for other file types
-          types: {
-            script: '\\.re$',
-            template: '\\.hb$'
+        // notice modified file test
+        test: /\.vue\./,
+        use: [
+          {
+            loader: 'vue-loader'
           },
-          global: {
-            // all files will have these
-            attr: 'value'
-          },
-          sass: {
-            // only SASS files will have these
-            attr: 'value'
-          },
-          style: {
-            // only style files will have these
-            attr: 'value'
+          {
+            loader: 'vue-separate-files-webpack-loader'
           }
-        }
+        ]
       }
     ]
+  },
+  plugins: [
+    // mandatory from VueLoader v15 onward
+    // has to be added AFTER "new VueLoaderPlugin()"
+    // available options below
+    new VueSeparateLoaderPlugin(options),
+  ]
+}
+```
+
+#### Complex (with options definition)
+```javascript
+// webpack.config.js
+
+const VueSeparateLoaderPlugin = require('vue-separate-files-webpack-loader/plugin')
+
+module.exports = {
+  module: {
+    rules: [
+      // regular VueLoader definition
+      // use it when you want to use both component styles, otherwise you may omit it
+      // ie SFC: Component.vue and Separated: Component.vue.html Component.vue.js
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      // VueSeparateFilesWebpackLoader definition
+      {
+        // notice modified file test
+        test: /\.vue\./,
+        use: [
+          {
+            loader: 'vue-loader',
+            options: {/* usual vue-loader options */}
+          },
+          {
+            loader: 'vue-separate-files-webpack-loader',
+            options: {
+              // add support for other file types
+              types: {
+                script: '\\.re$',
+                template: '\\.hb$'
+              },
+              global: {
+                // all files will have these
+                attr: 'value'
+              },
+              sass: {
+                // only SASS files will have these
+                attr: 'value'
+              },
+              style: {
+                // only style files will have these
+                attr: 'value'
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    // mandatory from VueLoader v15 onward
+    // has to be added AFTER "new VueLoaderPlugin()"
+    // available options below
+    new VueSeparateLoaderPlugin(options),
+  ]
+}
+```
+
+#### With VueCLI 3 generated project
+
+```javascript
+// vue.config.js
+
+const VueSeparateFilesWebpackLoaderPlugin = require('vue-separate-files-webpack-loader/plugin')
+
+module.exports = {
+  chainWebpack: config => {
+    config
+      .plugin('vue-separate-files-webpack-loader')
+      .use(VueSeparateFilesWebpackLoaderPlugin, [options])
+      .after('vue-loader')
+
+    config.module
+      .rule('vue-separate-files-webpack-loader')
+      .test(/\.vue\./)
+      .use('vue-loader')
+        .loader('vue-loader')
+        .end()
+      .use('vue-separate-files-webpack-loader')
+        .loader('vue-separate-files-webpack-loader')
   }
-]
+}
+```
+
+#### Plugin options
+
+Passed as regular `Object`.
+
+| Option| Default value | Description |
+| :--- | :--- | :--- |
+| test | `/\.vue\./` | When you use different file test condition in loader definition than default `/\.vue\./`, you have to define it also in plugin options. |
+
+##### Example
+
+```javascript
+// webpack.config.js
+
+const VueSeparateLoaderPlugin = require('vue-separate-files-webpack-loader/plugin')
+
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.condition\./,
+        use: [
+          {
+            loader: 'vue-loader'
+          },
+          {
+            loader: 'vue-separate-files-webpack-loader'
+          }
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new VueSeparateLoaderPlugin({
+      test: /\.condition\./
+    })
+  ]
+}
 ```
 
 ### Supported file extensions / types
@@ -94,7 +219,7 @@ types: {
 }
 ```
 
-> IMPORTANT! configurations are MERGED together, so there is no way do remove default configuration
+> **IMPORTANT!** configurations are MERGED together, so there is no way do remove default configuration
 
 ### How it works
 
@@ -118,11 +243,11 @@ Generated structure
 <script src="Component.vue.js"></script>
 ```
 
-This generated string is then passed to "vue-loader"
+This generated string is then passed to `vue-loader`
 
 ### Custom block support
 
-Loader allows to use `vue custom blocks`. 
+Loader allows to use **vue custom blocks**. 
 Simply define file and its extension will be used as tag name.
 
 #### Example

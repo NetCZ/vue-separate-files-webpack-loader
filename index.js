@@ -1,7 +1,8 @@
 var loaderUtils = require('loader-utils'),
   _ = require('lodash'),
   path = require('path'),
-  helper = require('./src/helper');
+  helper = require('./src/helper'),
+  fs = require('fs');
 
 var defaultOptions = {
   test: /\.vue\./,
@@ -19,7 +20,7 @@ module.exports = function (content, map) {
   var inputFile = map.file || path.basename(this.resourcePath),
     options = _.assign({}, _.cloneDeep(defaultOptions), loaderOptions),
     dirPath = this.context,
-    fileNames = this.fs.readdirSync(dirPath).filter(function (file) {
+    fileNames = fs.readdirSync(dirPath).filter(function (file) {
       return !file.match(/^\./);
     });
 

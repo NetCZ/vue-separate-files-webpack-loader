@@ -23,7 +23,7 @@
   "scripts": {
     "test": "mocha",
     "test:cov": "nyc --reporter=text-lcov yarn test | coveralls",
-    "travis-deploy-once": "travis-deploy-once",
+    "travis-deploy-once": "travis-deploy-once --pro",
     "semantic-release": "semantic-release"
   },
   "husky": {

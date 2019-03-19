@@ -89,7 +89,7 @@ exports.createParts = function createParts(options, dirPath, inputFile, fileName
 
     if (_.has(parts, settings.tagName) || _.has(parts, settings.fileType)) {
       var type = settings.tagName || settings.fileType;
-      throw new TypeError(`File "${file}" can't be used as "${type}", because it was already defined in "${_.get(parts[type], 'file', null)}".`);
+      throw new TypeError(`File "${ file }" can't be used as "${ type }", because it was already defined in "${ _.get(parts[type], 'file', null) }".`);
     }
 
     parts[settings.tagName || settings.fileType] = that.createPart(settings, options);

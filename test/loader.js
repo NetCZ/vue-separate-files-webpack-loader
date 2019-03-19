@@ -49,11 +49,11 @@ describe('loader: errors', function () {
   });
 
   it('should throw duplication TypeError - multiple components in same directory', function () {
-    var content = require(duplicateDir + 'Component.vue');
+    var content = require(twoComponentsDuplicateSameDir + 'SecondComponent.vue');
 
     assert.throws(function () {
-      loader.apply(_.assign({}, webpack, { context: twoComponentsDuplicateSameDir }), [content, { file: 'Component.vue.js' }]);
-    }, TypeError, 'File "SecondComponent.vue.html" can\'t be used as "template", because it was already defined in "FirstComponent.vue.html".');
+      loader.apply(_.assign({}, webpack, { context: twoComponentsDuplicateSameDir }), [content, { file: 'SecondComponent.vue.js' }]);
+    }, TypeError, 'File "SecondComponent.vue.pug" can\'t be used as "template", because it was already defined in "SecondComponent.vue.html".');
   });
 });
 

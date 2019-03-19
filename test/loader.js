@@ -14,7 +14,8 @@ var twoPartsDir = path.resolve(dir + '/files/two-parts') + path.sep,
   emptyDir = path.resolve(dir + '/files/empty') + path.sep,
   twoComponentsSameDir = path.resolve(dir + '/files/two-components-same-dir') + path.sep,
   twoComponentsDuplicateSameDir = path.resolve(dir + '/files/two-components-duplicate-same-dir') + path.sep,
-  twoPartsDirCustomScript = path.resolve(dir + '/files/two-parts-custom-script') + path.sep;
+  twoPartsDirCustomScript = path.resolve(dir + '/files/two-parts-custom-script') + path.sep,
+  similarComponentNamesDir = path.resolve(dir + '/files/similar-component-names') + path.sep;
 
 beforeEach(function () {
   loader = require('../index');
@@ -48,11 +49,11 @@ describe('loader: errors', function () {
   });
 
   it('should throw duplication TypeError - multiple components in same directory', function () {
-    var content = require(duplicateDir + 'Component.vue');
+    var content = require(twoComponentsDuplicateSameDir + 'SecondComponent.vue');
 
     assert.throws(function () {
-      loader.apply(_.assign({}, webpack, { context: twoComponentsDuplicateSameDir }), [content, { file: 'Component.vue.js' }]);
-    }, TypeError, 'File "SecondComponent.vue.html" can\'t be used as "template", because it was already defined in "FirstComponent.vue.html".');
+      loader.apply(_.assign({}, webpack, { context: twoComponentsDuplicateSameDir }), [content, { file: 'SecondComponent.vue.js' }]);
+    }, TypeError, 'File "SecondComponent.vue.pug" can\'t be used as "template", because it was already defined in "SecondComponent.vue.html".');
   });
 });
 
@@ -254,6 +255,28 @@ describe('loader: success', function () {
         }
       }
     }), [content, { file: 'Component.vue.re' }]);
+
+    assert.strictEqual(result, expected);
+  });
+
+  it('should has two parts even when similar component names occurs - first component', function () {
+    var content = require(similarComponentNamesDir + 'Component.vue');
+
+    var expected = '<template separated src="' + similarComponentNamesDir + 'Component.vue.html" lang="html"></template>' +
+      '<script separated src="' + similarComponentNamesDir + 'Component.vue.js" lang="js"></script>';
+
+    var result = loader.apply(_.assign({}, webpack, { context: similarComponentNamesDir }), [content, { file: 'Component.vue.js' }]);
+
+    assert.strictEqual(result, expected);
+  });
+
+  it('should has two parts even when similar component names occurs - second component', function () {
+    var content = require(similarComponentNamesDir + 'SimilarComponent.vue');
+
+    var expected = '<template separated src="' + similarComponentNamesDir + 'SimilarComponent.vue.html" lang="html"></template>' +
+      '<script separated src="' + similarComponentNamesDir + 'SimilarComponent.vue.js" lang="js"></script>';
+
+    var result = loader.apply(_.assign({}, webpack, { context: similarComponentNamesDir }), [content, { file: 'SimilarComponent.vue.js' }]);
 
     assert.strictEqual(result, expected);
   });

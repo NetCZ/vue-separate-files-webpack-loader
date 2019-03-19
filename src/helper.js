@@ -76,7 +76,7 @@ exports.createPart = function createPart(settings, options) {
 };
 
 exports.createParts = function createParts(options, dirPath, inputFile, fileNames) {
-  var inputFileName = inputFile.split(options.test)[0];
+  var inputFileName = new RegExp(`^${ inputFile.split(options.test)[0] }`);
   var parts = {},
     that = this;
 

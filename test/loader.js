@@ -280,4 +280,15 @@ describe('loader: success', function () {
 
     assert.strictEqual(result, expected);
   });
+
+  it('should has two parts even when similar component names occurs - third component', function () {
+    var content = require(similarComponentNamesDir + 'ComponentVerySimilar.vue');
+
+    var expected = '<template separated src="' + similarComponentNamesDir + 'ComponentVerySimilar.vue.html" lang="html"></template>' +
+      '<script separated src="' + similarComponentNamesDir + 'ComponentVerySimilar.vue.js" lang="js"></script>';
+
+    var result = loader.apply(_.assign({}, webpack, { context: similarComponentNamesDir }), [content, { file: 'ComponentVerySimilar.vue.js' }]);
+
+    assert.strictEqual(result, expected);
+  });
 });

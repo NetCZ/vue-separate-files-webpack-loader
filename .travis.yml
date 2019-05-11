@@ -1,23 +1,48 @@
 language: node_js
+
 cache:
+  yarn: true
   directories:
-    - ~/.npm
+    - ~/.cache
+    - node_modules
+
 notifications:
   email: false
-node_js:
-  - '10'
-  - '9'
-  - '8'
+
 sudo: false
-before_install: yarn global add greenkeeper-lockfile@1
-before_script: greenkeeper-lockfile-update
-script:
-  - commitlint-travis
-  - yarn test
-after_script: greenkeeper-lockfile-upload
-after_success:
-  - yarn test:cov
-  - yarn travis-deploy-once "yarn semantic-release"
+
+jobs:
+  include:
+    - stage: lint
+      node_js: '12'
+      script: commitlint-travis
+
+    - &test
+      stage: test
+      node_js: '12'
+      install: yarn
+      script: yarn test
+      after_success:
+        - yarn test:cov
+    - <<: *test
+      node_js: '11'
+    - <<: *test
+      node_js: '10'
+
+    - stage: npm release
+      node_js: '12'
+      before_install: yarn global add greenkeeper-lockfile@1
+      before_script: greenkeeper-lockfile-update
+      script:
+        - yarn semantic-release
+      after_script: greenkeeper-lockfile-upload
+
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
+
+stages:
+  - lint
+  - test
+  - name: npm release
+    if: branch = master

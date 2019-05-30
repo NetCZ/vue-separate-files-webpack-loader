@@ -14,6 +14,12 @@ function VueSeparateFilesWebpackLoaderPlugin(options) {
   this.testString = this.options.test.source.replace(/\\\./g, '.');
 }
 
+function matcher(item) {
+  return _.findIndex(item.use, function (use) {
+    return use.loader === 'vue-separate-files-webpack-loader';
+  }) !== -1;
+}
+
 VueSeparateFilesWebpackLoaderPlugin.prototype.apply = function (compiler) {
   var plugins = _.filter(compiler.options.plugins, function (plugin) {
     var name = plugin.constructor.name;
@@ -36,7 +42,7 @@ VueSeparateFilesWebpackLoaderPlugin.prototype.apply = function (compiler) {
     throw new Error('[VueSeparateFilesWebpackLoaderPlugin] No matching rule for ' + this.testString + ' files found.\n' +
       'Make sure there is at least one root-level rule that matches ' + this.testString + ' files.\n' +
       'Also make sure you pass options.test property when not using default one.'
-    )
+    );
   }
 
   var ruleUse = _.concat([], rule.use);
@@ -56,11 +62,5 @@ VueSeparateFilesWebpackLoaderPlugin.prototype.apply = function (compiler) {
 
   compiler.options.module.rules.push(rule);
 };
-
-function matcher(item) {
-  return _.findIndex(item.use, function (use) {
-    return use.loader === 'vue-separate-files-webpack-loader';
-  }) !== -1;
-}
 
 module.exports = VueSeparateFilesWebpackLoaderPlugin;

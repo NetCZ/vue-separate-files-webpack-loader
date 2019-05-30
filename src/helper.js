@@ -4,6 +4,17 @@ var _ = require('lodash'),
 
 var exports = {};
 
+function checkTagExistence(file, parts, settings) {
+  if (_.has(parts, settings.tagName) || _.has(parts, settings.fileType)) {
+    var type = settings.tagName || settings.fileType;
+    throw new TypeError(`File "${ file }" can't be used as "${ type }", because it was already defined in "${ _.get(parts[type], 'file', null) }".`);
+  }
+}
+
+function prepareTag() {
+
+}
+
 exports.addTag = function addTag(tags, tagName, attributes) {
   tags.push(tag({
     name: tagName,
@@ -62,16 +73,18 @@ exports.resolveOptions = function resolveOptions(options, defaultOptions) {
 };
 
 exports.createPart = function createPart(settings, options) {
+  var attributes = _.assign({}, {
+    separated: true,
+    src: path.join(settings.dirPath, settings.file),
+    scoped: settings.tagName === 'style' && settings.scoped,
+    lang: settings.tagName ? settings.fileType : false
+  }, options.global, options[settings.fileType] || {}, options[settings.tagName] || {});
+
   return {
     name: settings.tagName || settings.fileType,
     file: settings.file,
     fileName: settings.fileName,
-    attributes: _.assign({}, {
-      separated: true,
-      src: path.join(settings.dirPath, settings.file),
-      scoped: settings.tagName === 'style' && settings.scoped,
-      lang: settings.tagName ? settings.fileType : false
-    }, options.global, options[settings.fileType] || {}, options[settings.tagName] || {})
+    attributes: attributes
   };
 };
 
@@ -87,10 +100,7 @@ exports.createParts = function createParts(options, dirPath, inputFile, fileName
 
     var settings = that.parseFile(options, dirPath, file);
 
-    if (_.has(parts, settings.tagName) || _.has(parts, settings.fileType)) {
-      var type = settings.tagName || settings.fileType;
-      throw new TypeError(`File "${ file }" can't be used as "${ type }", because it was already defined in "${ _.get(parts[type], 'file', null) }".`);
-    }
+    checkTagExistence(file, parts, settings);
 
     parts[settings.tagName || settings.fileType] = that.createPart(settings, options);
   });

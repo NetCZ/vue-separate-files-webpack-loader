@@ -243,8 +243,7 @@ describe('plugin: success', function () {
     var expected = {
       resource: {
         test: /\.vue\./
-      },
-      resourceQuery: undefined
+      }
     };
 
     plugin.apply(compiler);
@@ -255,7 +254,7 @@ describe('plugin: success', function () {
     assert.deepEqual(rule.resource, expected.resource);
     assert.equal(rule.resourceQuery, expected.resourceQuery);
     assert.isFunction(rule.use);
-    assert.deepEqual(rule.use({ resourceQuery: undefined }), defaultLoaderRuleDefinition.use)
+    assert.deepEqual(rule.use({}), defaultLoaderRuleDefinition.use)
   });
 
   it('should apply loader rule with custom plugin options', function () {
@@ -279,8 +278,7 @@ describe('plugin: success', function () {
     var expected = {
       resource: {
         test: /\.condition/
-      },
-      resourceQuery: undefined
+      }
     };
 
     plugin.apply(compiler);
@@ -291,7 +289,7 @@ describe('plugin: success', function () {
     assert.deepEqual(rule.resource, expected.resource);
     assert.equal(rule.resourceQuery, expected.resourceQuery);
     assert.isFunction(rule.use);
-    assert.deepEqual(rule.use({ resourceQuery: undefined }), defaultLoaderRuleDefinition.use)
+    assert.deepEqual(rule.use({}), defaultLoaderRuleDefinition.use)
   });
 
   it('should contain exactly one rule for loader', function () {
@@ -310,8 +308,7 @@ describe('plugin: success', function () {
     var expected = {
       resource: {
         test: /\.vue\./
-      },
-      resourceQuery: undefined
+      }
     };
 
     plugin.apply(compiler);
@@ -323,6 +320,6 @@ describe('plugin: success', function () {
     assert.deepEqual(rule.resource, expected.resource);
     assert.equal(rule.resourceQuery, expected.resourceQuery);
     assert.isFunction(rule.use);
-    assert.deepEqual(rule.use({ resourceQuery: undefined }), defaultLoaderRuleDefinition.use)
+    assert.deepEqual(rule.use({}), defaultLoaderRuleDefinition.use)
   });
 });

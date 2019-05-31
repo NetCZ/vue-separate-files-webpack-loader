@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
-    "@commitlint/config-conventional": "^7.6.0",
+    "@commitlint/config-conventional": "^8.0.0",
     "@commitlint/travis-cli": "^8.0.0",
     "chai": "^4.2.0",
     "coveralls": "^3.0.3",

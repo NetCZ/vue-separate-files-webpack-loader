@@ -23,7 +23,9 @@
   "scripts": {
     "test": "mocha",
     "test:cov": "nyc --reporter=text-lcov yarn test | coveralls",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "husky": {
     "hooks": {
@@ -34,7 +36,8 @@
   "dependencies": {
     "create-html-element": "^3.0.0",
     "loader-utils": "^1.2.3",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
@@ -46,5 +49,6 @@
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "semantic-release": "^15.13.12"
-  }
+  },
+  "snyk": true
 }

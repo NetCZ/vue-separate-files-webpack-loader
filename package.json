@@ -23,7 +23,9 @@
   "scripts": {
     "test": "mocha",
     "test:cov": "nyc --reporter=text-lcov yarn test | coveralls",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "snyk-protect": "snyk protect",
+    "prepublish": "yarn snyk-protect"
   },
   "husky": {
     "hooks": {
@@ -45,6 +47,8 @@
     "husky": "^3.0.0",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
-    "semantic-release": "^15.13.12"
-  }
+    "semantic-release": "^15.13.12",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }

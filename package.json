@@ -48,7 +48,7 @@
     "mocha": "^6.1.4",
     "nyc": "^15.0.0",
     "semantic-release": "^15.13.12",
-    "snyk": "^1.251.0"
+    "snyk": "^1.267.0"
   },
   "snyk": true
 }

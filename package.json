@@ -47,7 +47,7 @@
     "husky": "^4.0.10",
     "mocha": "^6.1.4",
     "nyc": "^15.0.0",
-    "semantic-release": "^16.0.1",
+    "semantic-release": "^17.0.0",
     "snyk": "^1.267.0"
   },
   "snyk": true

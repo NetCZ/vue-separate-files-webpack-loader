@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/NetCZ/vue-separate-files-webpack-loader/badge.svg)](https://coveralls.io/github/NetCZ/vue-separate-files-webpack-loader) 
 [![Known Vulnerabilities](https://snyk.io/test/github/netcz/vue-separate-files-webpack-loader/badge.svg?targetFile=package.json)](https://snyk.io/test/github/netcz/vue-separate-files-webpack-loader?targetFile=package.json)
 [![Maintainability](https://api.codeclimate.com/v1/badges/eeb26dd14d1b50a6ea2f/maintainability)](https://codeclimate.com/github/NetCZ/vue-separate-files-webpack-loader/maintainability)
-[![Greenkeeper badge](https://badges.greenkeeper.io/NetCZ/vue-separate-files-webpack-loader.svg)](https://greenkeeper.io/)
+
 
 Creates `.vue` single file components on fly, allowing you to have clean separated components files and still enjoy 
 advantages of [vue-loader](https://github.com/vuejs/vue-loader).

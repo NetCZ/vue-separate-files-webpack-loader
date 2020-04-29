@@ -36,19 +36,19 @@
   "dependencies": {
     "create-html-element": "^3.0.0",
     "loader-utils": "^2.0.0",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.0.0",
-    "@commitlint/config-conventional": "^8.0.0",
-    "@commitlint/travis-cli": "^8.0.0",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@commitlint/travis-cli": "^8.3.5",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.3",
-    "husky": "^4.0.10",
-    "mocha": "^7.0.1",
-    "nyc": "^15.0.0",
-    "semantic-release": "^17.0.0",
-    "snyk": "^1.267.0"
+    "coveralls": "^3.1.0",
+    "husky": "^4.2.5",
+    "mocha": "^7.1.2",
+    "nyc": "^15.0.1",
+    "semantic-release": "^17.0.7",
+    "snyk": "^1.314.0"
   },
   "snyk": true
 }

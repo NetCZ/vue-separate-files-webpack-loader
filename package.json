@@ -50,5 +50,8 @@
     "semantic-release": "^17.0.7",
     "snyk": "^1.314.0"
   },
+  "resolutions": {
+    "lodash": "^4.17.15"
+  },
   "snyk": true
 }

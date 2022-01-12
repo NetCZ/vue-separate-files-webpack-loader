@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "create-html-element": "^3.0.0",
-    "loader-utils": "^2.0.1",
+    "loader-utils": "^2.0.2",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
